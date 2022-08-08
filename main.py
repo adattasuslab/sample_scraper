@@ -1,3 +1,5 @@
+# scrapping on sample website1  https://quotes.toscrape.com/ using BS4 & selenium libraries
+
 class Scraper1:
     import warnings
     warnings.filterwarnings('ignore')
