@@ -62,3 +62,59 @@ class Scraper1:
 
 
     df_final.to_csv('Data.csv')
+    
+
+#-----------------------------------------------------------------------------------------------
+import warnings
+warnings.filterwarnings('ignore')
+import scrapy
+from scrapy import Selector
+from scrapy.http import HtmlResponse, TextResponse
+import requests
+import pandas as pd
+import time
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+
+class Scraper2:
+    url = "https://www.geeksforgeeks.org/"
+    driver = webdriver.Chrome('drivers/chromedriver.exe')
+    driver.get(url)
+    #
+    # ele = driver.find_element("xpath","//*[@id='post-862080']/div/div[1]/a")
+    # print(ele.text)
+
+    i = 0
+    ele = []
+    while i<10:
+        i=i+1
+        path = "/html/body/div[3]/div/div/div[1]/div[2]/div["+str(i)+"]/div/div[1]/a"
+        ele.append(driver.find_element("xpath", path).text)
+    print(ele)
+
+
+#-----------------------------------------------------------------------------------------------
+import scrapy
+import warnings
+warnings.filterwarnings('ignore')
+import logging
+from scrapy.crawler import CrawlerProcess
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+
+class Scraper3:(scrapy.Spider):
+    name = "Scraper3"
+    start_urls = ['https://www.geeksforgeeks.org/']
+
+    def parse(self, response):
+        for i in range(15):
+            path = "/html/body/div[3]/div/div/div[1]/div[2]/div[" + str(i) + "]/div/div[1]/a/text()"
+            print(response.xpath(path).get())
+
+    custom_settings = {'LOG_LEVEL': logging.WARNING}
+
+process = CrawlerProcess()
+process.crawl(Scraper3)
+process.start()
+
+
